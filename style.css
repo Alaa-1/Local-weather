@@ -1,0 +1,44 @@
+body{
+margin-top: 100px;
+background-color: 	#C0C0C0  ;
+background-repeat: no-repeat;
+background-size: cover;
+}
+.header{
+    font-size: 6.5rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+    
+}
+#country{
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    
+}
+
+#imgw{
+    width: 100px;
+}
+hr{
+    width: 25%;
+}
+.left{
+    float: left;
+    margin-left: 400px;
+
+}
+.right{
+float: right;
+margin-right: 400px;
+}
+#temp{
+    font-size: 3rem;
+}
+#hum{
+    font-size: 3rem;
+}
+#type{
+    font-size: 2.5rem;
+}
+

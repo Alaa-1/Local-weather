@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container-fluid text-center ">   
+<h1 class="header text-center">Weather App</h1>
+<h4 id="country"></h4>
+ </h4>
+ <!-- weather icon -->
+ <img id="icon" src="">
+ <div id="type"></div>
+ <br>
+ <!-- buttons -->
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-danger active" id="cel">
+      <input type="checkbox" checked autocomplete="off">°C
+    </label>
+    <label class="btn btn-primary" id="fer">
+      <input type="checkbox" autocomplete="off"> °F
+    </label>
+    </div>
+    <br>
+ <hr>
+ <i class="fa fa-thermometer-empty fa-2x" aria-hidden="true"></i>
+ <div id="temp"></div>
+ <i class="fa fa-tint fa-2x" aria-hidden="true"></i>
+ <div id="hum"></div>
+</div>
+</body>
+
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function(){
+   if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function(position) {
+     var lat;
+     var lon;
+     lat = position.coords.latitude;
+     lon = position.coords.longitude;
+     $("#data").html("latitude: " +lat+"<br>longitude: " +lon);
+     var api = "https://openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=b6907d289e10d714a6e88b30761fae22&units=metric";
+    //  api call
+     $.getJSON(api, function(data){
+     var weatherType = data.weather[0].description;
+     var temp = Math.round(data.main.temp);
+     var country = data.sys.country;
+     var city = data.name;
+     var humidity = data.main.humidity;
+
+     $("#country").html(city+", "+country);
+     $("#temp").html(temp+" °C");
+     $("#type").html(weatherType);
+     $("#hum").html(humidity+" %");
+
+     document.getElementById("fer").onclick = function (){
+         var c = temp;
+         var cToF = c * 9 / 5 +32;
+         $("#temp").html(cToF+" °F");
+     }
+     document.getElementById("cel").onclick = function(){
+        $("#temp").html(temp+ " °C");
+     }
+     var icon;
+   switch(weatherType){
+       case 'clear sky':
+       icon = "http://openweathermap.org/img/w/01d.png";
+       break;
+       case 'few clouds':
+       icon ="http://openweathermap.org/img/w/02d.png";
+       break;
+       case 'scattered clouds':
+       icon = "http://openweathermap.org/img/w/03d.png";
+       break;
+       case 'broken clouds':
+       icon="http://openweathermap.org/img/w/04d.png";
+       break;
+       case 'shower rain':
+       icon ="http://openweathermap.org/img/w/09d.png";
+       break;
+       case 'rain':
+       icon ="http://openweathermap.org/img/w/10d.png";
+       break;
+       case 'thunderstorm':
+       icon ="http://openweathermap.org/img/w/11d.png";
+       break;
+       case 'snow':
+       icon="http://openweathermap.org/img/w/13d.png";
+       break;
+       case 'mist':
+       icon ="http://openweathermap.org/img/w/50d.png";
+       break;
+   }
+   document.getElementById("icon").src = icon ;
+     });
+     });
+     }
+     });
+    </script>
+</html>
